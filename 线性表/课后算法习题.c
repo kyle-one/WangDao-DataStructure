@@ -1,5 +1,5 @@
 //
-//gitg Created by 安炳旭 on 2019-08-21.
+// Created by 安炳旭 on 2019-08-21.
 //
 
 #include <cstdio>
@@ -10,10 +10,10 @@
 typedef struct {
     ElemType data[MAX_SIZE];
     int length;
-} SqlList;
+} SqList;
 
 //题目一：从顺序表中删除最小值的元素并返回删除的值 出错则退出运行
-bool deleteMinElem(SqlList &list, int &value) {
+bool deleteMinElem(SqList &list, int &value) {
     //返回值为value
     if (list.length == 0) {
         return false;
@@ -35,7 +35,7 @@ bool deleteMinElem(SqlList &list, int &value) {
 }
 
 //题目二：将顺序表L的所有元素逆置
-void reverseList(SqlList &l) {
+void reverseList(SqList &l) {
     //空表和长度为一的表不需要逆置
     if (l.length == 0 || l.length == 1) {
         return;
@@ -51,7 +51,7 @@ void reverseList(SqlList &l) {
 
 //题目三：删除所有值为x的元素
 //方法1：虚拟构造一个新的数组 利用数组的随机访问 根据不等于X的元素 在原来数组的基础上构造新的数组
-void deleteX_1(SqlList &list, int value) {
+void deleteX_1(SqList &list, int value) {
     if (list.length == 0) {
         return;
     }
@@ -66,7 +66,7 @@ void deleteX_1(SqlList &list, int value) {
 }
 
 //法二：有几个等于X的元素 当前元素就向前移动几个
-void deleteX_2(SqlList &list, int value) {
+void deleteX_2(SqList &list, int value) {
     if (list.length == 0) {
         return;
     };
@@ -84,7 +84,7 @@ void deleteX_2(SqlList &list, int value) {
 }
 
 //题目四：删除有序的顺序表的值【s，t】的元素
-bool deleteS_T(SqlList &l, int s, int t) {
+bool deleteS_T(SqList &l, int s, int t) {
     if (s >= t) {
         return false;
     }
@@ -106,10 +106,58 @@ bool deleteS_T(SqlList &l, int s, int t) {
     return true;
 }
 
+
 // 题目五:同4 四的方法可以删除有序的顺序表
+
+// 题目六：方法和3异曲同工
+bool delete_Same(SqList &list) {
+    if (list.length == 0 || list.length == 1) {//长度为0或者1的时候 无重复元素
+        return false;
+    }
+    int i, j;//i用于记录上一个不一样的元素的下标， j用于循环遍历 从数组的第二个元素（下标为1开始）
+    for (i = 0, j = 1; j < list.length; ++j) {
+        if (list.data[i] != list.data[j]) {
+            list.data[++i] = list.data[j];//原理同3
+        }
+
+    }
+    list.length = i + 1;//调整表长度 表长度至少为1个因为第一个元素肯定不同
+    return true;
+}
+
+//题目七：合并两个有序顺序表（合并步骤归并排序的思想差不多）
+bool mergeTwoList(SqList &list1, SqList &list2, SqList &list) {
+    if (list1.length == 0 || list2.length == 0) {
+        return false;
+    }
+    if (list1.length + list2.length > MAX_SIZE) {
+        return false;
+    }
+    int index1 = 0;
+    int index2 = 0;
+    int index = 0;
+    //将等长部分合并
+    while (index1 < list1.length && index2 < list2.length) {
+        if (list1.data[index1] <= list2.data[index2]) {
+            list.data[index++] = list1.data[index1++];
+        } else {
+            list.data[index++] = list2.data[index2++];
+        }
+    }
+    //将剩余部分合并
+    while (index1 < list1.length) {
+        list.data[index++] = list1.data[index1++];
+    }
+    while (index2 < list2.length) {
+        list.data[index++] = list2.data[index2++];
+    }
+    list.length = index;
+    return true;
+}
+
 int main() {
     /*题目1测试*/
-//    SqlList l;
+//    SqList l;
 //    l.length = 4;
 //    l.data[0] = 11;
 //    l.data[1] = 41;
@@ -129,7 +177,7 @@ int main() {
 
 
 //    /*题目2测试*/
-//    SqlList l;
+//    SqList l;
 //    l.length = 1;
 //    l.data[0] = 11;
 //    l.data[1] = 41;
@@ -149,7 +197,7 @@ int main() {
 
 
 //    /*题目3测试*/
-//    SqlList l;
+//    SqList l;
 //    l.length = 5;
 //    l.data[0] = 11;
 //    l.data[1] = 11;
@@ -167,24 +215,64 @@ int main() {
 //        printf("%d\t", l.data[i]);
 //    }
 
-    /*题目4测试*/
-    SqlList l;
-    l.length = 5;
-    l.data[0] = 1;
-    l.data[1] = 2;
-    l.data[2] = 31;
-    l.data[3] = 4;
-    l.data[4] = 5;
+//    /*题目4测试*/
+//    SqList l;
+//    l.length = 5;
+//    l.data[0] = 1;
+//    l.data[1] = 2;
+//    l.data[2] = 31;
+//    l.data[3] = 4;
+//    l.data[4] = 5;
+//
+//
+//    for (int i = 0; i < l.length; ++i) {
+//        printf("%d\t", l.data[i]);
+//    }
+//    printf("\n");
+//    deleteS_T(l, 31, 31);
+//    for (int i = 0; i < l.length; ++i) {
+//        printf("%d\t", l.data[i]);
+//    }
+
+//    /*题目6测试*/
+//    SqList l;
+//    l.length = 7;
+//    l.data[0] = 1;
+//    l.data[1] = 2;
+//    l.data[2] = 2;
+//    l.data[3] = 3;
+//    l.data[4] = 5;
+//    l.data[5] = 5;
+//    l.data[6] = 5;
+//
+//
+//    for (int i = 0; i < l.length; ++i) {
+//        printf("%d\t", l.data[i]);
+//    }
+//    printf("\n");
+//    delete_Same(l);
+//    for (int i = 0; i < l.length; ++i) {
+//        printf("%d\t", l.data[i]);
+//    }
+//    return 0;
+
+    /*题目7测试*/
+    SqList l;
+    SqList l1;
+    SqList l2;
+    l1.length = 3;
+    l2.length = 2;
+    l1.data[0] = 1;
+    l1.data[1] = 10;
+    l1.data[2] = 1100;
+    l2.data[0] = 4;
+    l2.data[1] = 100;
+    mergeTwoList(l1, l2, l);
 
 
-    for (int i = 0; i < l.length; ++i) {
-        printf("%d\t", l.data[i]);
-    }
     printf("\n");
-    deleteS_T(l, 31, 31);
     for (int i = 0; i < l.length; ++i) {
         printf("%d\t", l.data[i]);
     }
-
     return 0;
 }
