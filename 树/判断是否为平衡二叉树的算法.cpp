@@ -18,6 +18,10 @@ typedef struct BSTNode {
 
 int getDepth(BiTree tree);
 
+int heightSimple(BiTree tree) {
+    return tree == NULL ? 0 : (max(heightSimple(tree->left), heightSimple(tree->right)) + 1);
+}
+
 //递归算法：自上而下的算法 增加了许多不必要的开销 需要剪枝
 bool judge_AVL(BiTree tree) {
     if (tree == NULL)
