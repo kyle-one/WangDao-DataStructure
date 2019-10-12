@@ -3,4 +3,4 @@ project(one)
 
 set(CMAKE_CXX_STANDARD 11)
 
-add_executable(one 排序/第k小的数字.cpp)
+add_executable(one 考研算法真题/2018算法题.cpp)
