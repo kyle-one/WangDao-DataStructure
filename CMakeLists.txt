@@ -3,4 +3,4 @@ project(one)
 
 set(CMAKE_CXX_STANDARD 11)
 
-add_executable(one 考研算法真题/2018算法题.cpp)
+add_executable(one 考研算法真题/2013算法题.cpp)
