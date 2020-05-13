@@ -18,6 +18,7 @@ void AdjustDown(int a[], int k, int len) {
     for (int i = 2 * k; i <= len; i *= 2) {
         if (i < len && a[i + 1] > a[i]) {
             i++;
+            // 看看孩子谁大
         }
         if (a[0] >= a[i]) {
             break;
