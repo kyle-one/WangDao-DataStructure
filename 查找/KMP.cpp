@@ -8,11 +8,25 @@
 
 using namespace std;
 
-void get_next(string s, int next[]) {
-    int i = 0, j = 0;
+void get_next(string s, int next[]) {//数组从1开始
+    int i = 1, j = 0;
     next[0] = 0;
     while (i < s.length() - 1) {
         if (j == 0 || s[i] == s[j]) {
+            i++;
+            j++;
+            next[i] = j;
+        } else {
+            j = next[j];
+        }
+    }
+}
+
+void get_next2(string s,int next[]){//数组从0开始
+    int i = 0, j = -1;
+    next[0] = -1;
+    while (i < s.length() - 1) {
+        if (j == -1 || s[i] == s[j]) {
             i++;
             j++;
             next[i] = j;
