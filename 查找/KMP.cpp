@@ -11,7 +11,7 @@ using namespace std;
 void get_next(string s, int next[]) {//数组从1开始
     int i = 1, j = 0;
     next[1] = 0;
-    while (i < s.length() - 1) {
+    while (i < s.length()) {
         if (j == 0 || s[i] == s[j]) {
             i++;
             j++;
